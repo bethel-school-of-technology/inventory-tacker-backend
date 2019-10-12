@@ -1,0 +1,47 @@
+<nav>
+    <a href="/">Home</a>
+    <a href="/users/signup">Signup</a>
+    <a href="/users/login">Login</a>
+    <a href="/users/profile">Profile</a>
+    <a href="/inventory">Inventory</a>
+    <a href="/users/admin">Admin</a>
+    <a href="/users/logout">Logout</a>
+</nav>
+<hr>
+<h2>New Stock Item</h2>
+
+<form id="posts" name="inventory" method="POST" action="/inventory">
+
+    <div>
+        <label for="title">Mower Name:</label>
+        <input type="text" name="title">
+    </div>
+    <div>
+        <label for="body">Mower Type:</label>
+        <input type="text" name="body">
+    </div>
+    <div>
+        <label for="inventory">Inventory:</label>
+        <input type="number" name="inventory">
+    </div><br>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>
+<hr>
+<h2>Inventory: </h2>
+<ul class="list">
+    {{#each inventory}}
+    <li>
+        <span class='postbadgeA'>{{MowerId}}</span><span class='postbadge'>Mower: {{MowerName}}:</span>
+        Type: {{ MowerType }}: <span class='postbadge'>In Stock: {{Inventory}}</span>
+        <button class='post' onclick="window.location.href='/inventory/{{MowerId}}'">Update
+        </button>
+        <form name='delete' method="POST" action="/inventory/{{MowerId}}/delete">
+            <button class="postdel" type="submit">Delete</button>
+        </form>
+
+    </li>
+    {{/each}}
+
+</ul>

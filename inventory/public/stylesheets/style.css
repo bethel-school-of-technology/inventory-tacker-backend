@@ -1,0 +1,262 @@
+h1 {
+	color: #369;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 200%;
+}
+h2 {
+	color: #369;
+	font-family: Arial, Helvetica, sans-serif;
+}
+h3 {
+	color: #444;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: lighter;
+}
+body {
+	margin: 2em;
+}
+body,
+input[text],
+button {
+	color: #888;
+	font-family: Cambria, Georgia;
+}
+a {
+	cursor: pointer;
+	cursor: hand;
+}
+button {
+	font-family: Arial;
+	background-color: #eee;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 4px;
+	cursor: pointer;
+	cursor: hand;
+	margin-left: 10px;
+}
+button:hover {
+	background-color: #607d8b;
+	color: white;
+}
+button:disabled {
+	background-color: #eee;
+	color: #aaa;
+	cursor: auto;
+}
+
+/* Navigation link styles */
+nav a {
+	padding: 5px 10px;
+	text-decoration: none;
+	margin-right: 10px;
+	margin-top: 10px;
+	display: inline-block;
+	background-color: #eee;
+	border-radius: 4px;
+}
+nav a:visited,
+a:link {
+	color: #607d8b;
+}
+nav a:hover {
+	color: #039be5;
+	background-color: #cfd8dc;
+}
+nav a.active {
+	color: #039be5;
+}
+
+#signup input {
+	margin-left: 9em;
+}
+
+#signup label {
+	position: absolute;
+}
+
+#login input {
+	margin-left: 9em;
+}
+
+#login label {
+	position: absolute;
+}
+#posts input {
+	margin-left: 10em;
+}
+
+#posts label {
+	position: absolute;
+}
+/* everywhere else */
+* {
+	font-family: Arial, Helvetica, sans-serif;
+}
+.tasks {
+	margin: 0 0 2em 0;
+	list-style-type: none;
+	padding: 0;
+	width: 17em;
+}
+.tasks li {
+	position: relative;
+	cursor: pointer;
+	background-color: #eee;
+	margin: .5em;
+	padding: .3em 0;
+	height: 1.6em;
+	border-radius: 4px;
+}
+
+.tasks li:hover {
+	color: #41738b;
+	background-color: #ddd;
+	left: .1em;
+}
+
+.tasks a {
+	color: #888;
+	text-decoration: none;
+	position: relative;
+	display: block;
+}
+
+.tasks a:hover {
+	color: #607d8b;
+}
+
+.badge {
+	display: inline-block;
+	font-size: small;
+	color: white;
+	padding: 0.8em 0.7em 0 0.7em;
+	background-color: #607d8b;
+	line-height: 1em;
+	position: relative;
+	left: -1px;
+	top: -4px;
+	height: 1.8em;
+	min-width: 16px;
+	text-align: right;
+	margin-right: .8em;
+	border-radius: 4px 0 0 4px;
+}
+.postbadgeA {
+	display: inline-block;
+	font-size: small;
+	color: white;
+	padding: 0.8em 0.7em 0 0.7em;
+	background-color: #607d8b;
+	line-height: 1em;
+	position: relative;
+	left: -1px;
+	top: -4px;
+	height: 1.8em;
+	min-width: 16px;
+	text-align: right;
+	margin-right: 0;
+	border-radius: 4px 0 0 4px;
+}
+.postbadge {
+	display: inline-block;
+	font-size: small;
+	color: white;
+	padding: 0.8em 0.7em 0 0.7em;
+	background-color: rgb(187, 186, 186);
+	line-height: 1em;
+	position: relative;
+	left: -1px;
+	top: -4px;
+	height: 1.8em;
+	min-width: 16px;
+	text-align: right;
+	margin-right: .8em;
+	border-radius: 0 4px 4px 0;
+}
+button.del {
+	font-family: Arial;
+	background-color: #eee;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 4px;
+	cursor: pointer;
+	cursor: hand;
+	position: relative;
+	left: 194px;
+	top: -32px;
+}
+button.del:hover {
+	background-color: #9c3a3a;
+	color: white;
+}
+button.postdel {
+	font-family: Arial;
+	background-color: #eee;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 4px;
+	cursor: pointer;
+	cursor: hand;
+}
+button.postdel:hover {
+	background-color: #9c3a3a;
+	color: white;
+}
+.tasks li.selected {
+	background-color: #cfd8dc;
+	color: white;
+}
+.tasks li.selected:hover {
+	background-color: #bbd8dc;
+}
+ul {
+	list-style-type: none;
+	padding: 0px;
+}
+.list {
+	margin: 0 0 2em 0;
+	list-style-type: none;
+	padding: 0;
+	width: 70em;
+}
+.list li {
+	position: relative;
+	cursor: pointer;
+	background-color: white;
+	margin: 2.5em;
+	padding: .3em 0;
+	height: 1.6em;
+	border-radius: 4px;
+}
+
+.list li:hover {
+	color: #41738b;
+	background-color: #ddd;
+	left: .1em;
+}
+
+.list a {
+	color: #888;
+	text-decoration: none;
+	position: relative;
+	display: block;
+}
+
+.list a:hover {
+	color: #607d8b;
+}
+.post button {
+	font-family: Arial;
+	background-color: #eee;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 4px;
+	cursor: pointer;
+	cursor: hand;
+	position: absolute;
+}
+.post button:hover {
+	background-color: #607d8b;
+	color: white;
+}

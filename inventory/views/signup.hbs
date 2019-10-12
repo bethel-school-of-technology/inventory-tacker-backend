@@ -1,0 +1,42 @@
+<nav>
+    <a href="/">Home</a>
+    <a href="/users/signup">Signup</a>
+    <a href="/users/login">Login</a>
+    <a href="/users/profile">Profile</a>
+    <a href="/inventory">Inventory</a>
+    <a href="/users/admin">Admin</a>
+    <a href="/users/logout">Logout</a>
+</nav>
+<hr>
+
+<h1>All Money Mower Staff - Please sign up</h1>
+
+<form id="signup" name="signup" method="POST" action="/users/signup">
+    <div>
+        <label for="name">First Name: </label>
+        <input type="text" name="firstName" required>
+    </div>
+    <div>
+        <label for="name">Last Name: </label>
+        <input type="text" name="lastName" required>
+    </div>
+    <div>
+        <label for="name">Employee #: </label>
+        <input type="text" name="employeeNumber" required>
+    </div>
+    <div>
+        <label for="name">Email: </label>
+        <input type="text" name="email" required>
+    </div>
+    <div>
+        <label for="name">Username: </label>
+        <input type="text" name="username" required>
+    </div>
+    <div>
+        <label for="name">Password: </label>
+        <input type="password" name="password" required>
+    </div><br>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>

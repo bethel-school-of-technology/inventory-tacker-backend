@@ -1,0 +1,18 @@
+<nav>
+    <a href="/">Home</a>
+    <a href="/users/signup">Signup</a>
+    <a href="/users/login">Login</a>
+    <a href="/users/profile">Profile</a>
+    <a href="/inventory">Inventory</a>
+    <a href="/users/admin">Admin</a>
+    <a href="/users/logout">Logout</a>
+</nav>
+<hr>
+<h2>List of Employees</h2>
+<ul class='tasks'>
+    {{#each users}}
+    <li><span class="badge">{{ UserId }}</span>{{FirstName}} {{LastName}}<button
+            onclick="window.location.href='/users/admin/editUser/{{UserId}}'">View</button>
+    </li>
+    {{/each}}
+</ul>
