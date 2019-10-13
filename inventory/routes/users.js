@@ -160,7 +160,7 @@ router.get('/admin/editUser/:id', function(req, res, next) {
 			}
 		});
 	} else {
-		res.send('Admin priveleges required');
+		res.send('Admin privileges required');
 	}
 });
 

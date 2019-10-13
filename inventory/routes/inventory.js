@@ -67,7 +67,7 @@ router.get('/:id', function(req, res, next) {
 	}
 });
 
-router.delete('/:id/delete', function(req, res, next) {
+router.post('/:id/delete', function(req, res, next) {
 	let mowerId = parseInt(req.params.id);
 	models.mowers
 		.update(
