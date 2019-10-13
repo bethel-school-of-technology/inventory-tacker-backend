@@ -34,7 +34,7 @@
     {{#each inventory}}
     <li>
         <span class='postbadgeA'>{{MowerId}}</span><span class='postbadge'>Mower: {{MowerName}}:</span>
-        Type: {{ MowerType }}: <span class='postbadge'>In Stock: {{Inventory}}</span>
+        Type: {{ MowerType }}: <span class='postbadgeA'>In Stock: </span><span class='postbadge'>{{Inventory}}</span>
         <button class='post' onclick="window.location.href='/inventory/{{MowerId}}'">Update
         </button>
         <form name='delete' method="POST" action="/inventory/{{MowerId}}/delete">
