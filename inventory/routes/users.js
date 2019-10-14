@@ -59,7 +59,7 @@ router.post('/login', function(req, res, next) {
 					res.cookie('jwt', token);
 					res.redirect('profile')
 				} else {
-					res.alert('Wrong Password')
+					res.send('Wrong password. Please go back and try again.');
 					res.send('Wrong password');
 				}
 			}
