@@ -57,9 +57,9 @@ router.post('/login', function(req, res, next) {
 				if (passwordMatch) {
 					let token = authService.signUser(user);
 					res.cookie('jwt', token);
-					res.send('Login successful');
+					res.redirect('profile')
 				} else {
-					console.log('Wrong password');
+					res.alert('Wrong Password')
 					res.send('Wrong password');
 				}
 			}
