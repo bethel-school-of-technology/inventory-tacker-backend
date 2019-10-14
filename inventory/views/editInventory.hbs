@@ -11,18 +11,9 @@
 <h2>Update Inventory:</h2>
 
 
-<form id="posts" name="update" method="POST" action="/inventory/{{MowerId}}/update">
-
+<form id="inventory" name="update" method="POST" action="/inventory/{{MowerId}}/update">
     <div>
-        <label for="title">Mower Name:</label>
-        <input type="text" name="title">
-    </div>
-    <div>
-        <label for="body">Mower Type</label>
-        <input type="text" name="body">
-    </div>
-    <div>
-        <label for="inventory">Inventory</label>
+        <label for="inventory">Current Inventory: </label>
         <input type="number" name="inventory">
     </div><br>
     <div>

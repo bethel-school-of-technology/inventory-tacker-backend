@@ -90,8 +90,6 @@ router.post('/:id/update', function(req, res, next) {
 	models.mowers
 		.update(
 			{
-				MowerName: req.body.title,
-				MowerType: req.body.body,
 				Inventory: req.body.inventory
 			},
 			{
