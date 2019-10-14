@@ -60,7 +60,6 @@ router.post('/login', function(req, res, next) {
 					res.redirect('profile')
 				} else {
 					res.send('Wrong password. Please go back and try again.');
-					res.send('Wrong password');
 				}
 			}
 		});
