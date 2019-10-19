@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
 		res.send('Need to be logged in to view this page.');
 	}
 });
-
+//hello
 router.post('/', function(req, res, next) {
 	models.mowers
 		.findOrCreate({
