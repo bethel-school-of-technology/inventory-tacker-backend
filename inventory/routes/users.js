@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/signup', function(req, res, next) {
-	res.render('signup');
+	res.json('signup');
 });
 
 router.post('/signup', function(req, res, next) {
@@ -36,7 +36,7 @@ router.post('/signup', function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-	res.render('login');
+	res.json('login');
 });
 
 router.post('/login', function(req, res, next) {
@@ -70,7 +70,7 @@ router.get('/profile', function(req, res, next) {
 	if (token) {
 		authService.verifyUser(token).then((user) => {
 			if (user) {
-				res.render('profile', {
+				res.json('profile', {
 					FirstName: user.FirstName,
 					LastName: user.LastName,
 					EmployeeNumber: user.EmployeeNumber,
@@ -98,7 +98,7 @@ router.get('/admin', function(req, res, next) {
 						where: { Deleted: false },
 						raw: true
 					})
-					.then((usersFound) => res.render('adminView', { users: usersFound }));
+					.then((usersFound) => res.json('adminView', { users: usersFound }));
 			} else {
 				res.status(401);
 				res.send('You are not authorized to access this page');
@@ -144,7 +144,7 @@ router.get('/admin/editUser/:id', function(req, res, next) {
 				let UserId = parseInt(req.params.id);
 				if (UserId) {
 					models.users.findByPk(parseInt(req.params.id)).then((users) => {
-						res.render('editUser', {
+						res.json('editUser', {
 							UserId: users.UserId,
 							FirstName: users.FirstName,
 							LastName: users.LastName,
