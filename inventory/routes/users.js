@@ -144,7 +144,7 @@ router.get('/admin/editUser/:id', function(req, res, next) {
 				let UserId = parseInt(req.params.id);
 				if (UserId) {
 					models.users.findByPk(parseInt(req.params.id)).then((users) => {
-						res.json('editUser', {
+						res.json({
 							UserId: users.UserId,
 							FirstName: users.FirstName,
 							LastName: users.LastName,

@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 					.findAll({
 						where: { Deleted: false }
 					})
-					.then((results) => res.json('inventory', { inventory: results }));
+					.then((results) => res.json(results));
 			} else {
 				res.status(401);
 				res.send('You are not authorized to view this page');
@@ -22,8 +22,6 @@ router.get('/', function(req, res, next) {
 		res.send('Need to be logged in to view this page.');
 	}
 });
-//trying one more time
-
 router.post('/', function(req, res, next) {
 	models.mowers
 		.findOrCreate({
@@ -35,8 +33,7 @@ router.post('/', function(req, res, next) {
 		})
 		.spread(function(result, created) {
 			if (created) {
-				res.json('inventory');
-				res.redirect('/inventory');
+				res.json(created);
 			} else {
 				res.send('Input failed');
 			}
