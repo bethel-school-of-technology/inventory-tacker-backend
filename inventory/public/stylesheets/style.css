@@ -1,3 +1,30 @@
+@media screen and (min-width: 24.15em) {
+	/* 21em "gate" * 1.15 font-size */
+	p {
+		line-height: calc(1.3em + (1.5 - 1.3) * ((100vw - 21em) / (35 - 21)));
+	}
+}
+
+@media (min-width: 40.25em) {
+	/* 35em "gate" * 1.15 font-size */
+	p {
+		line-height: 1.5em;
+	}
+}
+
+[class*='col-'] {
+	float: left;
+}
+.col-1-3 {
+	width: 33.33%;
+}
+.col-2-3 {
+	width: 66.66%;
+}
+.col-1-6 {
+	width: 50%;
+}
+
 h1 {
 	color: #369;
 	font-family: Arial, Helvetica, sans-serif;
@@ -13,8 +40,17 @@ h3 {
 	font-weight: lighter;
 }
 body {
-	margin: 2em;
+	margin: 1em auto;
+	padding: 0 1em;
+	font-family: "Source Sans Pro", sans-serif;
+	font-size: 1.15em;
+	max-width: 35em;
 }
+
+p {
+	line-height: 1.3em;
+}
+
 body,
 input[text],
 button {
@@ -44,6 +80,15 @@ button:disabled {
 	color: #aaa;
 	cursor: auto;
 }
+.butupdate:hover {
+	background-color: darkkhaki;
+	color: white;
+}
+.butupdate:disabled {
+	background-color: #eee;
+	color: #aaa;
+	cursor: auto;
+}
 
 /* Navigation link styles */
 nav a {
@@ -68,7 +113,7 @@ nav a.active {
 }
 
 #signup input {
-	margin-left: 9em;
+	margin-left: 10em;
 }
 
 #signup label {
@@ -83,14 +128,14 @@ nav a.active {
 	position: absolute;
 }
 #posts input {
-	margin-left: 10em;
+	margin-left: 11em;
 }
 
 #posts label {
 	position: absolute;
 }
 #inventory input {
-	margin-left: 12em;
+	margin-left: 14em;
 }
 #inventory label {
 	position: absolute;
@@ -164,6 +209,22 @@ nav a.active {
 	margin-right: 0;
 	border-radius: 4px 0 0 4px;
 }
+.postbadge {
+	display: inline-block;
+	font-size: small;
+	color: white;
+	padding: 0.8em 0.7em 0 0.7em;
+	background-color: rgb(187, 186, 186);
+	line-height: 1em;
+	position: relative;
+	left: -1px;
+	top: -4px;
+	height: 1.8em;
+	min-width: 16px;
+	text-align: right;
+	margin-right: .8em;
+	border-radius: 0 4px 4px 0;
+}
 .postbadgeB {
 	display: inline-block;
 	font-size: small;
@@ -180,12 +241,12 @@ nav a.active {
 	margin-right: .8em;
 	border-radius: 0 4px 4px 0;
 }
-.postbadge {
+.postbadgeC {
 	display: inline-block;
 	font-size: small;
 	color: white;
 	padding: 0.8em 0.7em 0 0.7em;
-	background-color: rgb(187, 186, 186);
+	background-color: #3f3e09;
 	line-height: 1em;
 	position: relative;
 	left: -1px;
@@ -193,8 +254,8 @@ nav a.active {
 	height: 1.8em;
 	min-width: 16px;
 	text-align: right;
-	margin-right: .8em;
-	border-radius: 0 4px 4px 0;
+	margin-right: 0;
+	border-radius: 4px 0 0 4px;
 }
 button.del {
 	font-family: Arial;
@@ -240,13 +301,14 @@ ul {
 	margin: 0 0 2em 0;
 	list-style-type: none;
 	padding: 0;
-	width: 70em;
+	width: auto;
+	height: auto;
 }
 .list li {
 	position: relative;
 	cursor: pointer;
 	background-color: white;
-	margin: 2.5em;
+	margin: 1.1em;
 	padding: .3em 0;
 	height: 1.6em;
 	border-radius: 4px;
@@ -282,7 +344,15 @@ ul {
 	background-color: #607d8b;
 	color: white;
 }
-.right {
+#right {
 	float: right;
-	margin-right: 50em;
+}
+.red {
+	color: darkred;
+}
+.adminman {
+	float: right;
+}
+img {
+	max-width: 100%;
 }

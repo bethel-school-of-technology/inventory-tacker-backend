@@ -5,7 +5,7 @@ var mysql = require('mysql2');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	res.render('index', { title: 'Money Mower Staff and Inventory Pages' });
+	res.render('index', { title: 'Money Mower Staff and Inventory Tracker' });
 });
 
 router.get('/staticMowers', function(req, res, next) {

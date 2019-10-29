@@ -150,7 +150,8 @@ router.get('/admin/editUser/:id', function(req, res, next) {
 							LastName: users.LastName,
 							EmployeeNumber: users.EmployeeNumber,
 							Email: users.Email,
-							Username: users.Username
+							Username: users.Username,
+							Admin: users.Admin
 						});
 					});
 				}
