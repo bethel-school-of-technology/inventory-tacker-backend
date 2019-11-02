@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 					.findAll({
 						where: { Deleted: false }
 					})
-					.then((results) => res.json(results));
+					.then((results) => res.render('inventory', { inventory: results }));
 			} else {
 				res.status(401);
 				res.send('You are not authorized to view this page');
@@ -22,6 +22,7 @@ router.get('/', function(req, res, next) {
 		res.send('Need to be logged in to view this page.');
 	}
 });
+
 router.post('/', function(req, res, next) {
 	models.mowers
 		.findOrCreate({
@@ -33,7 +34,8 @@ router.post('/', function(req, res, next) {
 		})
 		.spread(function(result, created) {
 			if (created) {
-				res.json(created);
+				res.render('inventory');
+				res.redirect('/inventory');
 			} else {
 				res.send('Input failed');
 			}
@@ -48,7 +50,7 @@ router.get('/:id', function(req, res, next) {
 				let UserId = parseInt(req.params.id);
 				if (UserId) {
 					models.mowers.findByPk(parseInt(req.params.id)).then((mowers) => {
-						res.json('editInventory', {
+						res.render('editInventory', {
 							MowerId: mowers.MowerId,
 							MowerName: mowers.MowerName,
 							MowerType: mowers.MowerType,

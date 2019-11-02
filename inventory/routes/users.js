@@ -2,14 +2,50 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models');
 var authService = require('../services/auth');
+var axios = require('axios');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
 	res.send('respond with a resource');
 });
 
+/*
+//This get's back all the tasks
+router.get('/', async (req, res) => {
+	try {
+		const requests = await Request.find();
+		res.json(requests);
+	} catch (err) {
+		res.json({ message: err });
+	}
+});
+
+//Submits all the tasks
+
+router.post('/', async (req, res) => {
+	const request = await new Request({
+		UserId: req.body.UserId,
+		token: req.cookies.jwt
+	});
+	return request
+		.save()
+		.then((result) => {
+			console.log(result);
+			res.status(201).json(result);
+		})
+		.catch((err) => {
+			console.log(err);
+			res.status(422).json({
+				error: err
+			});
+		});
+});
+
+
+*/
+
 router.get('/signup', function(req, res, next) {
-	res.json('signup');
+	res.render('signup');
 });
 
 router.post('/signup', function(req, res, next) {
@@ -36,14 +72,21 @@ router.post('/signup', function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-	res.json('login');
+	/*axios.get('http://localhost:3000/Login').then((res) => {
+		let loginArray = [];
+		res.data.map((login) => {
+			loginArray.push(login);
+		});
+	});
+	res.post('login', { login: loginArray });*/
+	res.render('login');
 });
 
 router.post('/login', function(req, res, next) {
 	models.users
 		.findOne({
 			where: {
-				Username: req.body.username
+				Username: req.body.Username
 			}
 		})
 		.then((user) => {
@@ -70,7 +113,7 @@ router.get('/profile', function(req, res, next) {
 	if (token) {
 		authService.verifyUser(token).then((user) => {
 			if (user) {
-				res.json('profile', {
+				res.render('profile', {
 					FirstName: user.FirstName,
 					LastName: user.LastName,
 					EmployeeNumber: user.EmployeeNumber,
@@ -98,7 +141,7 @@ router.get('/admin', function(req, res, next) {
 						where: { Deleted: false },
 						raw: true
 					})
-					.then((usersFound) => res.json('adminView', { users: usersFound }));
+					.then((usersFound) => res.render('adminView', { users: usersFound }));
 			} else {
 				res.status(401);
 				res.send('You are not authorized to access this page');
@@ -136,6 +179,39 @@ router.post('/admin/editUser/:id/delete', function(req, res, next) {
 	}
 });
 
+router.post('/admin/editUser/:id/update', function(req, res, next) {
+	let token = req.cookies.jwt;
+	if (token) {
+		authService.verifyUser(token).then((user) => {
+			if (user) {
+				let UserId = parseInt(req.params.id);
+				models.users
+					.update(
+						{
+							UserId: users.UserId,
+							FirstName: users.FirstName,
+							LastName: users.LastName,
+							EmployeeNumber: users.EmployeeNumber,
+							Email: users.Email,
+							Username: users.Username,
+							Admin: users.Admin
+						},
+						{
+							where: { UserId: UserId }
+						}
+					)
+					.then((result) => res.redirect('/editUser'))
+					.catch((err) => {
+						res.status(400);
+						res.send(
+							'There was a problem updating the employee information. Please make sure you are specifying the correct id.'
+						);
+					});
+			}
+		});
+	}
+});
+
 router.get('/admin/editUser/:id', function(req, res, next) {
 	let token = req.cookies.jwt;
 	if (token) {
@@ -144,7 +220,7 @@ router.get('/admin/editUser/:id', function(req, res, next) {
 				let UserId = parseInt(req.params.id);
 				if (UserId) {
 					models.users.findByPk(parseInt(req.params.id)).then((users) => {
-						res.json({
+						res.render('editUser', {
 							UserId: users.UserId,
 							FirstName: users.FirstName,
 							LastName: users.LastName,

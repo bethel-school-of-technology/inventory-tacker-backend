@@ -14,10 +14,12 @@
     "express": "~4.16.1",
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
+    "inquirer": "^7.0.0",
     "jsonwebtoken": "^8.5.1",
     "morgan": "~1.9.1",
     "mysql2": "^1.7.0",
-    "sequelize": "^4.43.0"
+    "sequelize": "^4.43.0",
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.3"
