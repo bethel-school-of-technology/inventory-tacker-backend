@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 					.findAll({
 						where: { Deleted: false }
 					})
-					.then((results) => res.render('inventory', { inventory: results }));
+					.then((results) => res.json({ inventory: results }));
 			} else {
 				res.status(401);
 				res.send('You are not authorized to view this page');
@@ -34,7 +34,7 @@ router.post('/', function(req, res, next) {
 		})
 		.spread(function(result, created) {
 			if (created) {
-				res.render('inventory');
+				res.json(created);
 				res.redirect('/inventory');
 			} else {
 				res.send('Input failed');
@@ -50,7 +50,7 @@ router.get('/:id', function(req, res, next) {
 				let UserId = parseInt(req.params.id);
 				if (UserId) {
 					models.mowers.findByPk(parseInt(req.params.id)).then((mowers) => {
-						res.render('editInventory', {
+						res.json({
 							MowerId: mowers.MowerId,
 							MowerName: mowers.MowerName,
 							MowerType: mowers.MowerType,
@@ -78,7 +78,7 @@ router.post('/:id/delete', function(req, res, next) {
 				where: { MowerId: mowerId }
 			}
 		)
-		.then((result) => res.redirect('/inventory'))
+		.then((result) => res.json(result))
 		.catch((err) => {
 			res.status(400);
 			res.send('There was a problem deleting the inventory. Please make sure you are specifying the correct id.');
@@ -96,7 +96,7 @@ router.post('/:id/update', function(req, res, next) {
 				where: { MowerId: mowerId }
 			}
 		)
-		.then((result) => res.redirect('/inventory'))
+		.then((result) => res.json(result))
 		.catch((err) => {
 			res.status(400);
 			res.send(

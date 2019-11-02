@@ -52,14 +52,14 @@ router.post('/signup', function(req, res, next) {
 	models.users
 		.findOrCreate({
 			where: {
-				Username: req.body.username
+				Username: req.body.Username
 			},
 			defaults: {
-				FirstName: req.body.firstName,
-				LastName: req.body.lastName,
-				EmployeeNumber: req.body.employeeNumber,
-				Email: req.body.email,
-				Password: authService.hashPassword(req.body.password)
+				FirstName: req.body.FirstName,
+				LastName: req.body.LastName,
+				EmployeeNumber: req.body.EmployeeNumber,
+				Email: req.body.Email,
+				Password: authService.hashPassword(req.body.Password)
 			}
 		})
 		.spread(function(result, created) {
@@ -72,13 +72,6 @@ router.post('/signup', function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-	/*axios.get('http://localhost:3000/Login').then((res) => {
-		let loginArray = [];
-		res.data.map((login) => {
-			loginArray.push(login);
-		});
-	});
-	res.post('login', { login: loginArray });*/
 	res.render('login');
 });
 
@@ -113,7 +106,7 @@ router.get('/profile', function(req, res, next) {
 	if (token) {
 		authService.verifyUser(token).then((user) => {
 			if (user) {
-				res.render('profile', {
+				res.json({
 					FirstName: user.FirstName,
 					LastName: user.LastName,
 					EmployeeNumber: user.EmployeeNumber,
@@ -141,7 +134,7 @@ router.get('/admin', function(req, res, next) {
 						where: { Deleted: false },
 						raw: true
 					})
-					.then((usersFound) => res.render('adminView', { users: usersFound }));
+					.then((usersFound) => res.json({ users: usersFound }));
 			} else {
 				res.status(401);
 				res.send('You are not authorized to access this page');
@@ -200,7 +193,7 @@ router.post('/admin/editUser/:id/update', function(req, res, next) {
 							where: { UserId: UserId }
 						}
 					)
-					.then((result) => res.redirect('/editUser'))
+					.then((result) => res.json(result))
 					.catch((err) => {
 						res.status(400);
 						res.send(
@@ -220,7 +213,7 @@ router.get('/admin/editUser/:id', function(req, res, next) {
 				let UserId = parseInt(req.params.id);
 				if (UserId) {
 					models.users.findByPk(parseInt(req.params.id)).then((users) => {
-						res.render('editUser', {
+						res.json({
 							UserId: users.UserId,
 							FirstName: users.FirstName,
 							LastName: users.LastName,
