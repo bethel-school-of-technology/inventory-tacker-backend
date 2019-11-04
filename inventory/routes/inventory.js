@@ -12,14 +12,14 @@ router.get('/', function(req, res, next) {
 					.findAll({
 						where: { Deleted: false }
 					})
-					.then((results) => res.json({ inventory: results }));
+					.then((results) => res.send(JSON.stringify(results)));
 			} else {
 				res.status(401);
-				res.send('You are not authorized to view this page');
+				res.send(JSON.stringify('You are not authorized to view this page'));
 			}
 		});
 	} else {
-		res.send('Need to be logged in to view this page.');
+		res.send(JSON.stringify('Need to be logged in to view this page.'));
 	}
 });
 
@@ -34,10 +34,9 @@ router.post('/', function(req, res, next) {
 		})
 		.spread(function(result, created) {
 			if (created) {
-				res.json(created);
-				res.redirect('/inventory');
+				res.send(JSON.stringify(created));
 			} else {
-				res.send('Input failed');
+				res.send(JSON.stringify('Input failed'));
 			}
 		});
 });
@@ -50,20 +49,22 @@ router.get('/:id', function(req, res, next) {
 				let UserId = parseInt(req.params.id);
 				if (UserId) {
 					models.mowers.findByPk(parseInt(req.params.id)).then((mowers) => {
-						res.json({
-							MowerId: mowers.MowerId,
-							MowerName: mowers.MowerName,
-							MowerType: mowers.MowerType,
-							Inventory: mowers.Inventory
-						});
+						res.send(
+							JSON.stringify({
+								MowerId: mowers.MowerId,
+								MowerName: mowers.MowerName,
+								MowerType: mowers.MowerType,
+								Inventory: mowers.Inventory
+							})
+						);
 					});
 				}
 			} else {
-				res.send('Not authorized to update');
+				res.send(JSON.stringify('Not authorized to update'));
 			}
 		});
 	} else {
-		res.send('please login');
+		res.send(JSON.stringify('please login'));
 	}
 });
 
