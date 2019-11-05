@@ -52,10 +52,12 @@ router.post('/login', function(req, res, next) {
 				console.log('User not found');
 				return res.status(401).send(JSON.stringify('Login Failed'));
 			} else {
-				let passwordMatch = authService.comparePasswords(req.body.password, user.Password);
+				let passwordMatch = authService.comparePasswords(req.body.Password, user.Password);
+
 				if (passwordMatch) {
 					let token = authService.signUser(user);
 					res.cookie('jwt', token);
+					res.send(token);
 				} else {
 					res.status(401);
 					res.send(JSON.stringify('Wrong password. Please go back and try again.'));
