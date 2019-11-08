@@ -2,7 +2,21 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models');
 var authService = require('../services/auth');
+const jwt = require('jsonwebtoken');
 var axios = require('axios');
+
+//Verify Token
+function verifyToken(req, res, next) {
+	const bearerHeader = req.headers['authorization'];
+	if (typeof bearerHeader !== 'undefined') {
+		const bearer = bearerHeader.split(' ');
+		const bearerToken = bearer[1];
+		req.token = bearerToken;
+		next();
+	} else {
+		res.send('Forbidden');
+	}
+}
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -66,10 +80,12 @@ router.post('/login', function(req, res, next) {
 		});
 });
 
-router.get('/profile', function(req, res, next) {
-	let token = req.cookies.jwt;
-	if (token) {
-		authService.verifyUser(token).then((user) => {
+router.get('/profile', verifyToken, function(req) {
+	jwt.verify(req.token, (err, res) => {
+		if (err) {
+			res.sendStatus(403);
+			res.send('unable to verify');
+		} else {
 			if (user) {
 				res.send(
 					JSON.stringify({
@@ -82,12 +98,10 @@ router.get('/profile', function(req, res, next) {
 				);
 			} else {
 				res.status(401);
-				res.send(JSON.stringify('Invalid authentication token'));
+				res.send('Must be logged in');
 			}
-		});
-	} else {
-		res.send(JSON.stringify('Must be logged in'));
-	}
+		}
+	});
 });
 
 router.get('/admin', function(req, res, next) {
