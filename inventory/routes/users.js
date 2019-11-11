@@ -67,7 +67,7 @@ router.get('/admin', function(req, res, next) {
 			},
 			raw: true
 		})
-		.then((usersFound) => res.send(JSON.stringify({ usersFound })))
+		.then((usersFound) => res.send(JSON.stringify(usersFound)))
 		.catch((err) => res.send('You are not authorized to access this page'));
 });
 
@@ -92,24 +92,42 @@ router.post('/admin/editUser/:id/delete', function(req, res, next) {
 
 router.get('/admin/editUser/:id', function(req, res, next) {
 	let UserId = parseInt(req.params.id);
-	if (UserId) {
-		models.users.findByPk(parseInt(req.params.id)).then((users) => {
-			res.send(
-				JSON.stringify({
-					UserId: users.UserId,
-					FirstName: users.FirstName,
-					LastName: users.LastName,
-					EmployeeNumber: users.EmployeeNumber,
-					Email: users.Email,
-					Username: users.Username,
-					Admin: users.Admin
-				})
-			);
-		});
-	} else {
-		res.send('Not authorized to view');
-	}
+
+	models.users
+		.findOne({
+			where: {
+				UserId: UserId,
+				FirstName: FirstName,
+				LastName: LastName,
+				EmployeeNumber: EmployeeNumber,
+				Email: Email,
+				Username: Username,
+				Admin: Admin
+			},
+			raw: true
+		})
+		.then((userFound) => res.send(JSON.stringify(userFound)))
+		.catch((err) => res.send('You are not authorized to access this page'));
 });
+// let UserId = parseInt(req.params.id);
+// if (UserId) {
+//models.users.findByPk(parseInt(req.params.id)).then((users) => {
+// 	res.send(
+// 		JSON.stringify({
+// 			UserId: users.UserId,
+// 			FirstName: users.FirstName,
+// 			LastName: users.LastName,
+// 			EmployeeNumber: users.EmployeeNumber,
+// 			Email: users.Email,
+// 			Username: users.Username,
+// 			Admin: users.Admin
+// 		})
+// 	);
+// });
+// } else {
+// 	res.send('Not authorized to view');
+// }
+// });
 
 router.get('/logout', function(req, res, next) {
 	res.cookie(JSON.stringify('jwt', '', { expires: new Date(0) }));
