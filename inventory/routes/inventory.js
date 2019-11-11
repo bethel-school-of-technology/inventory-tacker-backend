@@ -3,23 +3,48 @@ var router = express.Router();
 var models = require('../models');
 var authService = require('../services/auth');
 
+// router.get('/', function(req, res, next) {
+// 	models.mowers
+// 		.findAll({
+// 			where: { Deleted: false }
+// 		})
+// 		.then((results) => res.send(JSON.stringify(results)))
+// 		//.then((results) => res.render('inventory', { inventory: results }))
+// 		.catch((err) => res.send('Need to be logged in to view this page.'));
+// });
+
 router.get('/', function(req, res, next) {
-	models.mowers
-		.findAll({
-			where: { Deleted: false }
-		})
-		.then((results) => res.send(JSON.stringify(results)))
-		//.then((results) => res.render('inventory', { inventory: results }))
-		.catch((err) => res.send('Need to be logged in to view this page.'));
+	let token = req.cookies.jwt;
+	if (token) {
+		authService.verifyUser(token).then((user) => {
+			if (user) {
+				models.mowers
+					.findAll({
+						where: { Deleted: false }
+					})
+					.then((results) => res.send(JSON.stringify(results)));
+			} else {
+				res.status(401);
+				res.send(JSON.stringify('You are not authorized to view this page'));
+			}
+		});
+	} else {
+		models.mowers
+					.findAll({
+						where: { Deleted: false }
+					})
+					.then((results) => res.send(JSON.stringify(results)));
+		//res.send(JSON.stringify('Need to be logged in to view this page.'));
+	}
 });
 
 router.post('/', function(req, res, next) {
 	models.mowers
 		.findOrCreate({
 			where: {
-				MowerName: req.body.title,
-				MowerType: req.body.body,
-				Inventory: req.body.inventory
+				MowerName: req.body.MowerName,
+				MowerType: req.body.MowerType,
+				Inventory: req.body.Inventory
 			}
 		})
 		.spread(function(result, created) {
@@ -31,22 +56,49 @@ router.post('/', function(req, res, next) {
 		});
 });
 
+// router.get('/:id', function(req, res, next) {
+// 	let MowerId = parseInt(req.params.id);
+// 	if (MowerId) {
+// 		models.mowers
+// 			.findByPk(parseInt(req.params.id))
+// 			.then((mowers) => {
+// 				res.send(
+// 					JSON.stringify({
+// 						MowerId: mowers.MowerId,
+// 						MowerName: mowers.MowerName,
+// 						MowerType: mowers.MowerType,
+// 						Inventory: mowers.Inventory
+// 					})
+// 				);
+// 			})
+// 			.catch((err) => res.send('please login'));
+// 	}
+// });
+
 router.get('/:id', function(req, res, next) {
-	let MowerId = parseInt(req.params.id);
-	if (MowerId) {
-		models.mowers
-			.findByPk(parseInt(req.params.id))
-			.then((mowers) => {
-				res.send(
-					JSON.stringify({
-						MowerId: mowers.MowerId,
-						MowerName: mowers.MowerName,
-						MowerType: mowers.MowerType,
-						Inventory: mowers.Inventory
-					})
-				);
-			})
-			.catch((err) => res.send('please login'));
+	//let token = req.cookies.jwt;
+	if (token) {
+		authService.verifyUser(token).then((user) => {
+			if (user) {
+				let UserId = parseInt(req.params.id);
+				if (UserId) {
+					models.mowers.findByPk(parseInt(req.params.id)).then((mowers) => {
+						res.send(
+							JSON.stringify({
+								MowerId: mowers.MowerId,
+								MowerName: mowers.MowerName,
+								MowerType: mowers.MowerType,
+								Inventory: mowers.Inventory
+							})
+						);
+					});
+				}
+			} else {
+				res.send(JSON.stringify('Not authorized to update'));
+			}
+		});
+	} else {
+		res.send(JSON.stringify('please login'));
 	}
 });
 

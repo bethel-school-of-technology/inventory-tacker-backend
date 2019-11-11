@@ -18,6 +18,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 //
+app.get('/', function(req, res){
+	res.sendFile(__dirname+'/bin/index.html');
+});
 app.use(function(req, res, next) {
 	res.header('Access-Control-Allow-Origin', '*');
 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
