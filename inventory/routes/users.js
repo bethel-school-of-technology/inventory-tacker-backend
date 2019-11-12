@@ -131,62 +131,6 @@ router.post('/admin/editUser/:id/delete', function(req, res, next) {
 	}
 });
 
-router.post('/admin/editUser/:id/update', function(req, res, next) {
-	let token = req.cookies.jwt;
-	if (token) {
-		authService.verifyUser(token).then((user) => {
-			if (user) {
-				let UserId = parseInt(req.params.id);
-				models.users
-					.update(
-						{
-							UserId: users.UserId,
-							FirstName: users.FirstName,
-							LastName: users.LastName,
-							EmployeeNumber: users.EmployeeNumber,
-							Email: users.Email,
-							Username: users.Username,
-							Admin: users.Admin
-						},
-						{
-							where: { UserId: UserId }
-						}
-					)
-					.then((result) => res.send(JSON.stringify(result)))
-					.catch((err) => {
-						res.status(400);
-						res.send(
-							JSON.stringify(
-								'There was a problem updating the employee information. Please make sure you are specifying the correct id.'
-							)
-						);
-					});
-			}
-		});
-	}
-});
-
-router.get('/admin', function(req, res, next) {
-	let token = req.cookies.jwt;
-	if (token) {
-		authService.verifyUser(token).then((user) => {
-			if (user.Admin) {
-				models.users
-					.findAll({
-						where: { Deleted: false },
-						raw: true
-					})
-					.then((usersFound) => res.send(JSON.stringify(usersFound)));
-			} else {
-				res.status(401);
-				res.send(JSON.stringify('You are not authorized to access this page'));
-			}
-		});
-	} else {
-		res.send(JSON.stringify('Need to be logged in as an Administator to view this page.'));
-	}
-});
-
 router.get('/logout', function(req, res, next) {
 	res.cookie(JSON.stringify('jwt', '', { expires: new Date(0) }));
 });

@@ -2,16 +2,21 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models');
 var authService = require('../services/auth');
+const jwt = require('jsonwebtoken');
 
-// router.get('/', function(req, res, next) {
-// 	models.mowers
-// 		.findAll({
-// 			where: { Deleted: false }
-// 		})
-// 		.then((results) => res.send(JSON.stringify(results)))
-// 		//.then((results) => res.render('inventory', { inventory: results }))
-// 		.catch((err) => res.send('Need to be logged in to view this page.'));
-// });
+//Verify Token
+function verifyToken(req, res, next) {
+	const bearerHeader = req.headers['authorization'];
+	if (typeof bearerHeader !== 'undefined') {
+		const bearer = bearerHeader.split(' ');
+		const bearerToken = bearer[1];
+		req.token = bearerToken;
+		next();
+		console.log(token);
+	} else {
+		res.send('Forbidden');
+	}
+}
 
 router.get('/', function(req, res, next) {
 	let token = req.cookies.jwt;
@@ -30,10 +35,10 @@ router.get('/', function(req, res, next) {
 		});
 	} else {
 		models.mowers
-					.findAll({
-						where: { Deleted: false }
-					})
-					.then((results) => res.send(JSON.stringify(results)));
+			.findAll({
+				where: { Deleted: false }
+			})
+			.then((results) => res.send(JSON.stringify(results)));
 		//res.send(JSON.stringify('Need to be logged in to view this page.'));
 	}
 });
@@ -56,32 +61,13 @@ router.post('/', function(req, res, next) {
 		});
 });
 
-// router.get('/:id', function(req, res, next) {
-// 	let MowerId = parseInt(req.params.id);
-// 	if (MowerId) {
-// 		models.mowers
-// 			.findByPk(parseInt(req.params.id))
-// 			.then((mowers) => {
-// 				res.send(
-// 					JSON.stringify({
-// 						MowerId: mowers.MowerId,
-// 						MowerName: mowers.MowerName,
-// 						MowerType: mowers.MowerType,
-// 						Inventory: mowers.Inventory
-// 					})
-// 				);
-// 			})
-// 			.catch((err) => res.send('please login'));
-// 	}
-// });
-
 router.get('/:id', function(req, res, next) {
-	//let token = req.cookies.jwt;
+	let token = req.cookies.jwt;
 	if (token) {
 		authService.verifyUser(token).then((user) => {
 			if (user) {
-				let UserId = parseInt(req.params.id);
-				if (UserId) {
+				let MowerId = parseInt(req.params.id);
+				if (MowerId) {
 					models.mowers.findByPk(parseInt(req.params.id)).then((mowers) => {
 						res.send(
 							JSON.stringify({
@@ -94,7 +80,7 @@ router.get('/:id', function(req, res, next) {
 					});
 				}
 			} else {
-				res.send(JSON.stringify('Not authorized to update'));
+				res.send(JSON.stringify('please login'));
 			}
 		});
 	} else {
