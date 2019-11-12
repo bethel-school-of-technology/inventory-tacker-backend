@@ -111,7 +111,7 @@ router.post('/:id/update', function(req, res, next) {
 	models.mowers
 		.update(
 			{
-				Inventory: req.body.inventory
+				Inventory: req.body.Inventory
 			},
 			{
 				where: { MowerId: mowerId }
