@@ -81,6 +81,18 @@ router.post('/login', function(req, res, next) {
 		});
 });
 
+// router.get('/admin', function(req, res, next) {
+// 	models.users
+// 		.findAll({
+// 			where: {
+// 				Deleted: false
+// 			},
+// 			raw: true
+// 		})
+// 		.then((usersFound) => res.send(JSON.stringify(usersFound)))
+// 		.catch((err) => res.send('You are not authorized to access this page'));
+// });
+
 router.get('/admin', function(req, res, next) {
 	let token = req.cookies.jwt;
 	if (token) {
@@ -101,6 +113,55 @@ router.get('/admin', function(req, res, next) {
 		res.send(JSON.stringify('Need to be logged in as an Administator to view this page.'));
 	}
 });
+
+router.get('/admin/editUser/:id', function(req, res, next) {
+	let token = req.cookies.jwt;
+	if (token) {
+		authService.verifyUser(token).then((user) => {
+			if (user.Admin) {
+				models.users
+					.findAll({
+						where: { UserId: UserId },
+						raw: true
+					})
+					.then((usersFound) => res.send(JSON.stringify(usersFound)));
+			} else {
+				res.status(401);
+				res.send(JSON.stringify('You are not authorized to access this page'));
+			}
+		});
+	} else {
+		res.send(JSON.stringify('Need to be logged in as an Administator to view this page.'));
+	}
+});
+// 	let token = req.cookies.jwt;
+// 	if (token) {
+// 		authService.verifyUser(token).then((user) => {
+// 			if (user.Admin) {
+// 				let UserId = parseInt(req.params.id);
+// 				if (UserId) {
+// 					models.users.findByPk(parseInt(req.params.id)).then((users) => {
+// 						res.send(
+// 							JSON.stringify({
+// 								UserId: users.UserId,
+// 								FirstName: users.FirstName,
+// 								LastName: users.LastName,
+// 								EmployeeNumber: users.EmployeeNumber,
+// 								Email: users.Email,
+// 								Username: users.Username,
+// 								Admin: users.Admin
+// 							})
+// 						);
+// 					});
+// 				}
+// 			} else {
+// 				res.send(JSON.stringify('Not authorized to view'));
+// 			}
+// 		});
+// 	} else {
+// 		res.send(JSON.stringify('Admin privileges required'));
+// 	}
+// });
 
 router.post('/admin/editUser/:id/delete', function(req, res, next) {
 	let token = req.cookies.jwt;

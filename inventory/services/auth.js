@@ -12,7 +12,7 @@ var authService = {
 			},
 			'secretkey',
 			{
-				expiresIn: '24h'
+				expiresIn: '78h'
 			}
 		);
 		return token;
