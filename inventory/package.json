@@ -20,7 +20,7 @@
 		"morgan": "~1.9.1",
 		"mysql2": "^1.7.0",
 		"sequelize": "^5.15.1",
-		"socket.io": "^2.3.0"
+		"socket.io": "^2.4.0"
 	},
 	"devDependencies": {
 		"nodemon": "^1.19.3"
